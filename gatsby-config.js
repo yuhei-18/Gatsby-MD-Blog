@@ -8,6 +8,14 @@ module.exports = {
             options: {
                 uri: 'http://127.0.0.1:5000/graphql'
             }
+        },
+        {
+            resolve: `gatsby-plugin-typescript`,
+            options: {
+                isTSX: true,
+                jsxPragma: `jsx`,
+                allExtensions: true,
+            }
         }
     ]
 }
