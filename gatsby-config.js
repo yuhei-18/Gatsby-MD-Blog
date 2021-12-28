@@ -10,12 +10,13 @@ module.exports = {
             }
         },
         {
-            resolve: `gatsby-plugin-typescript`,
+            resolve: 'gatsby-plugin-typescript',
             options: {
                 isTSX: true,
-                jsxPragma: `jsx`,
+                jsxPragma: 'jsx',
                 allExtensions: true,
             }
-        }
+        },
+        'gatsby-plugin-sass',
     ]
 }

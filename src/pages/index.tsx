@@ -1,7 +1,10 @@
 import React from "react"
 import { useQuery } from "@apollo/client"
 import { POSTS } from "../graphql/query"
-import ToMD from "../components/toMD"
+import ToMD from "../components/ToDM"
+import Layout from "../components/Layout"
+import { PostNodeType } from "../types"
+import { formatDate } from "../utils"
 
 const IndexPage = () => {
   const { loading, error, data } = useQuery(POSTS)
@@ -10,16 +13,20 @@ const IndexPage = () => {
   if (error) return <div>error: {error.message}</div>
 
   return (
-    <div>
-      {data.posts.edges.map((post) => (
-        <React.Fragment key={post.node.id}>
-          <p>{post.node.id}</p>
-          <p>{post.node.author.name}</p>
-          <ToMD text={post.node.text} />
-          <p>{post.node.author.email}</p>
-        </React.Fragment>
-      ))}
-    </div>
+    <Layout>
+      {data.posts.edges.map((post: PostNodeType) => {
+        return (
+          <React.Fragment key={post.node.id}>
+            <p>{post.node.id}</p>
+            <p>
+              作成日：{formatDate(post.node.createdAt)}
+              &nbsp;
+              更新日：{formatDate(post.node.updatedAt)}
+            </p>
+          </React.Fragment>
+        )
+      })}
+    </Layout>
   )
 }
 

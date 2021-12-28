@@ -8,6 +8,9 @@ export const USERS = gql`
           id
           name
           email
+          password
+          createdAt
+          updatedAt
         }
       }
     }
@@ -22,6 +25,8 @@ export const POSTS = gql`
           id
           text
           isPublish
+          createdAt
+          updatedAt
           author {
             id
             name
