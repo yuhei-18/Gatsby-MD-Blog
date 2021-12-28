@@ -17,7 +17,7 @@ const IndexPage = () => {
       {data.posts.edges.map((post: PostNodeType) => (
         <Card
           id={post.node.id}
-          title={post.node.id}
+          title={post.node.text.split("# ")[1]}
           createdAt={post.node.createdAt}
           updatedAt={post.node.updatedAt}
         />
