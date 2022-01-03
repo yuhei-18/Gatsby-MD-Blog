@@ -1,13 +1,16 @@
-import React from "react"
+import * as React from "react"
 import { marked } from "marked"
+import "./styles.scss"
 
-type Props = {
+type PropsType = {
   text: string
+  className: string
 }
 
-const ToMD: React.FC<Props> = ({ text }) => {
+const ToMD: React.FC<PropsType> = (props) => {
+  const { text, className } = props
   return (
-    <div dangerouslySetInnerHTML={{__html: marked(text)}} />
+    <div className={"md " + className} dangerouslySetInnerHTML={{__html: marked(text)}} />
   )
 }
 

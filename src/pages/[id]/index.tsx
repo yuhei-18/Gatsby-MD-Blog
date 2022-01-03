@@ -1,8 +1,9 @@
-import React from "react"
+import * as React from "react"
 import { useQuery } from "@apollo/client"
 import { POSTS } from "../../graphql/query"
 import Layout from "../../components/Layout"
 import ToMD from "../../components/ToMD"
+import TwoColumn from "../../components/TwoColumn"
 import { PostNodeType, PostType } from "../../types"
 
 type Pathname = {
@@ -16,6 +17,7 @@ type PropsType = {
 const IndexPage: React.FC<PropsType> = (props) => {
   const { location } = props
   const id = location.pathname.split("/")[1]
+  const [textState, setTextState] = React.useState("")
   const { loading, error, data } = useQuery(POSTS)
 
   if (loading) return <div>Loading...</div>
@@ -24,9 +26,30 @@ const IndexPage: React.FC<PropsType> = (props) => {
   const posts: PostNodeType = data.posts.edges.filter((post: PostNodeType) => post.node.id == id)
   const post: PostType = posts[0].node
 
+  // 文字をリアルタイムでMDに変換
+  const handleOnChange = (e) => {
+    setTextState(e.target.value)
+  }
+
+  // DBからの情報を取得したタイミングで再表示
+  React.useEffect(() => {
+    setTextState(post.text)
+  }, [post.text])
+
   return (
     <Layout>
-      <ToMD text={post.text} />
+      <TwoColumn>
+        <textarea
+          onChange={handleOnChange}
+          defaultValue={post.text}
+          className="w-1/2 h-screen p-2 focus:outline-none"
+          autoFocus={true}
+        />
+        <ToMD
+          text={textState}
+          className="w-1/2 h-screen p-2 overflow-y-auto bg-zinc-100"
+        />
+      </TwoColumn>
     </Layout>
   )
 }
