@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react"
 import { useQuery } from "@apollo/client"
 import { POSTS } from "../graphql/query"
 import Layout from "../components/Layout"
@@ -13,7 +13,6 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      <div className="m-8" />
       {data.posts.edges.map((post: PostNodeType) => (
         <Card
           id={post.node.id}

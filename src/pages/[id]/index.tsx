@@ -42,12 +42,10 @@ const IndexPage: React.FC<PropsType> = (props) => {
         <textarea
           onChange={handleOnChange}
           defaultValue={post.text}
-          className="w-1/2 h-screen p-2 focus:outline-none"
           autoFocus={true}
         />
         <ToMD
           text={textState}
-          className="w-1/2 h-screen p-2 overflow-y-auto bg-zinc-100"
         />
       </TwoColumn>
     </Layout>
