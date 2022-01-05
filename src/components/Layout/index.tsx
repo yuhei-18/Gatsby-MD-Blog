@@ -1,9 +1,10 @@
 import * as React from "react"
+import * as styles from "./styles.module.scss"
 
 const Layout: React.FC = ({ children }) => {
   return (
-    <div className="w-full">
-      <div className="w-11/12 mx-auto">
+    <div className={styles.layout}>
+      <div className={styles.contents}>
         {children}
       </div>
     </div>

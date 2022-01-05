@@ -1,5 +1,6 @@
 import * as React from "react"
 import { marked } from "marked"
+import * as styles from "./styles.module.scss"
 
 type PropsType = {
   text: string
@@ -8,7 +9,7 @@ type PropsType = {
 const ToMD: React.FC<PropsType> = (props) => {
   const { text } = props
   return (
-    <div dangerouslySetInnerHTML={{__html: marked(text)}} />
+    <div className={styles.md} dangerouslySetInnerHTML={{__html: marked(text)}} />
   )
 }
 

@@ -4,6 +4,7 @@ import { POSTS } from "../graphql/query"
 import Layout from "../components/Layout"
 import Card from "../components/Card"
 import { PostNodeType } from "../types"
+import "../scss/_reset.module.scss"
 
 const IndexPage = () => {
   const { loading, error, data } = useQuery(POSTS)

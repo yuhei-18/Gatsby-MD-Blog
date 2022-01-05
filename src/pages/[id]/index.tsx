@@ -5,6 +5,7 @@ import Layout from "../../components/Layout"
 import ToMD from "../../components/ToMD"
 import TwoColumn from "../../components/TwoColumn"
 import { PostNodeType, PostType } from "../../types"
+import * as styles from "./styles.module.scss"
 
 type Pathname = {
   pathname: string
@@ -43,10 +44,9 @@ const IndexPage: React.FC<PropsType> = (props) => {
           onChange={handleOnChange}
           defaultValue={post.text}
           autoFocus={true}
+          className={styles.textarea}
         />
-        <ToMD
-          text={textState}
-        />
+        <ToMD text={textState} />
       </TwoColumn>
     </Layout>
   )
