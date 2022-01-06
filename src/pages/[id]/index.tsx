@@ -1,9 +1,11 @@
 import * as React from "react"
+import clsx from "clsx"
 import { useQuery } from "@apollo/client"
 import { POSTS } from "../../graphql/query"
 import Layout from "../../components/Layout"
 import ToMD from "../../components/ToMD"
 import TwoColumn from "../../components/TwoColumn"
+import Header from "../../components/Header"
 import { PostNodeType, PostType } from "../../types"
 import * as styles from "./styles.module.scss"
 
@@ -39,6 +41,22 @@ const IndexPage: React.FC<PropsType> = (props) => {
 
   return (
     <Layout>
+      <Layout.Header>
+        <Header>
+          <ul className={styles.header}>
+            <li>
+              <a className={clsx(styles.button, styles.back_button)} href="../">BackHome</a>
+            </li>
+            <li>
+              <a className={clsx(styles.button, styles.save_button)}>Save</a>
+            </li>
+            <li>
+              <a className={clsx(styles.button, styles.delete_button)}>Delete</a>
+            </li>
+          </ul>
+        </Header>
+      </Layout.Header>
+
       <Layout.Body>
         <TwoColumn>
           <textarea

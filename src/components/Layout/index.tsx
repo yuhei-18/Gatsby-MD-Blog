@@ -17,13 +17,15 @@ const Layout: React.FC & LayoutComposition = ({ children }) => {
 
 const LayoutHeader: React.FC = ({ children }) => {
   return (
-    <div>{children}</div>
+    <div className={styles.header}>
+      {children}
+    </div>
   )
 }
 
 const LayoutBody: React.FC = ({ children }) => {
   return (
-    <div className={styles.contents}>
+    <div className={styles.body}>
       {children}
     </div>
   )
@@ -31,7 +33,9 @@ const LayoutBody: React.FC = ({ children }) => {
 
 const LayoutFooter: React.FC = ({ children }) => {
   return (
-    <div>{children}</div>
+    <div className={styles.footer}>
+      {children}
+    </div>
   )
 }
 

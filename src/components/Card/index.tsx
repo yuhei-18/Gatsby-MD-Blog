@@ -1,27 +1,34 @@
 import * as React from "react"
 import { Link } from "gatsby"
 import { formatDate } from "../../utils"
+import * as styles from "./styles.module.scss"
 
 type PropsType = {
   id: string;
   title: string;
+  author: string;
+  isPublish: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
 const Card: React.FC<PropsType> = (props) => {
-  const { id, title, createdAt, updatedAt } = props
+  const { id, title, author, isPublish, createdAt, updatedAt } = props
   return (
-    <div key={id} className="mb-4 w-3/4 mx-auto rounded bg-gray-200">
+    <div key={id} className={styles.card}>
       <Link to={id}>
-        <div className="p-4">
-          <h1 className="text-2xl mb-2">{title}</h1>
-          <p>
-            作成日：{formatDate(createdAt)}
-            &nbsp;
-            更新日：{formatDate(updatedAt)}
-          </p>
-        </div>
+        <ul className={styles.flex}>
+          <li className={styles.title}>{title}</li>
+          <li className={styles.author}>{author}</li>
+          <li className={styles.publish}>
+            {isPublish ?
+              (<label style={{ color: "#3f3" }}>公開</label>) :
+              (<label style={{ color: "#f00" }}>非公開</label>)
+            }
+          </li>
+          <li className={styles.date_info}>{formatDate(createdAt)}</li>
+          <li className={styles.date_info}>{formatDate(updatedAt)}</li>
+        </ul>
       </Link>
     </div>
   )
