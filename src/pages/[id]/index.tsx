@@ -39,15 +39,17 @@ const IndexPage: React.FC<PropsType> = (props) => {
 
   return (
     <Layout>
-      <TwoColumn>
-        <textarea
-          onChange={handleOnChange}
-          defaultValue={post.text}
-          autoFocus={true}
-          className={styles.textarea}
-        />
-        <ToMD text={textState} />
-      </TwoColumn>
+      <Layout.Body>
+        <TwoColumn>
+          <textarea
+            onChange={handleOnChange}
+            defaultValue={post.text}
+            autoFocus={true}
+            className={styles.textarea}
+          />
+          <ToMD text={textState} />
+        </TwoColumn>
+      </Layout.Body>
     </Layout>
   )
 }

@@ -14,14 +14,16 @@ const IndexPage = () => {
 
   return (
     <Layout>
-      {data.posts.edges.map((post: PostNodeType) => (
-        <Card
-          id={post.node.id}
-          title={post.node.text.split("# ")[1]}
-          createdAt={post.node.createdAt}
-          updatedAt={post.node.updatedAt}
-        />
-      ))}
+      <Layout.Body>
+        {data.posts.edges.map((post: PostNodeType) => (
+          <Card
+            id={post.node.id}
+            title={post.node.text.split("# ")[1]}
+            createdAt={post.node.createdAt}
+            updatedAt={post.node.updatedAt}
+          />
+        ))}
+      </Layout.Body>
     </Layout>
   )
 }
