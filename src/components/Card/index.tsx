@@ -15,7 +15,7 @@ type PropsType = {
 const Card: React.FC<PropsType> = (props) => {
   const { id, title, author, isPublish, createdAt, updatedAt } = props
   return (
-    <div key={id} className={styles.card}>
+    <div className={styles.card}>
       <Link to={id}>
         <ul className={styles.flex}>
           <li className={styles.title}>{title}</li>

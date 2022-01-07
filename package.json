@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.5.6",
+    "base-64": "^1.0.0",
     "clsx": "^1.1.1",
     "gatsby": "^4.4.0",
     "gatsby-plugin-apollo": "^4.0.2",
@@ -29,6 +30,7 @@
     "sass": "^1.45.1"
   },
   "devDependencies": {
+    "@types/base-64": "^1.0.0",
     "@types/marked": "^4.0.1",
     "@types/node": "^17.0.5",
     "@types/react": "^17.0.38",

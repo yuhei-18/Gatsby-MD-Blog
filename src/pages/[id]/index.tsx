@@ -1,7 +1,9 @@
 import * as React from "react"
 import clsx from "clsx"
-import { useQuery } from "@apollo/client"
+import { decode } from "base-64"
+import { useQuery, useMutation } from "@apollo/client"
 import { POSTS } from "../../graphql/query"
+import { UPDATE_POST } from "../../graphql/mutation"
 import Layout from "../../components/Layout"
 import ToMD from "../../components/ToMD"
 import TwoColumn from "../../components/TwoColumn"
@@ -22,22 +24,42 @@ const IndexPage: React.FC<PropsType> = (props) => {
   const id = location.pathname.split("/")[1]
   const [textState, setTextState] = React.useState("")
   const { loading, error, data } = useQuery(POSTS)
+  const [updatePost, {
+    loading: updatePostLoading,
+    error: updatePostError,
+  }] = useMutation(UPDATE_POST)
 
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>error: {error.message}</div>
+  // DBからの情報を取得したタイミングで再表示
+  // React.useEffect(() => {
+  //   setTextState(post.text)
+  // }, [post.text])
+
+  if (loading || updatePostLoading) return <div>Loading...</div>
+  if (error || updatePostError) return <div>error: {error.message}</div>
 
   const posts: PostNodeType = data.posts.edges.filter((post: PostNodeType) => post.node.id == id)
   const post: PostType = posts[0].node
 
-  // 文字をリアルタイムでMDに変換
+  // 文字をリアルタイムで MD に変換
   const handleOnChange = (e) => {
     setTextState(e.target.value)
   }
 
-  // DBからの情報を取得したタイミングで再表示
-  React.useEffect(() => {
-    setTextState(post.text)
-  }, [post.text])
+  // Post 更新処理
+  const handleOnClick = () => {
+    updatePost({
+      variables: {
+        input: {
+          id: decode(id).split(":")[1],
+          text: textState
+        }
+      }
+    }).then(() => {
+      console.log("postの更新に成功しました。")
+    }).catch((e) => {
+      console.error("postの更新に失敗しました。: " + {e})
+    })
+  }
 
   return (
     <Layout>
@@ -48,7 +70,12 @@ const IndexPage: React.FC<PropsType> = (props) => {
               <a className={clsx(styles.button, styles.back_button)} href="../">BackHome</a>
             </li>
             <li>
-              <a className={clsx(styles.button, styles.save_button)}>Save</a>
+              <a
+                className={clsx(styles.button, styles.save_button)}
+                onClick={handleOnClick}
+              >
+                Save
+              </a>
             </li>
             <li>
               <a className={clsx(styles.button, styles.delete_button)}>Delete</a>
@@ -65,7 +92,7 @@ const IndexPage: React.FC<PropsType> = (props) => {
             autoFocus={true}
             className={styles.textarea}
           />
-          <ToMD text={textState} />
+          <ToMD text={textState ? textState : post.text} />
         </TwoColumn>
       </Layout.Body>
     </Layout>
