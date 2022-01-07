@@ -1,4 +1,5 @@
 import * as React from "react"
+import { Link } from "gatsby"
 import { useQuery } from "@apollo/client"
 import { POSTS } from "../graphql/query"
 import Layout from "../components/Layout"
@@ -7,10 +8,13 @@ import Card from "../components/Card"
 import ListHeader from "../components/ListHeader"
 import { PostNodeType } from "../types"
 import * as styles from "./styles.module.scss"
-import "../scss/_reset.module.scss"
 
 const IndexPage = () => {
-  const { loading, error, data } = useQuery(POSTS)
+  const { loading, error, data, refetch } = useQuery(POSTS)
+
+  React.useEffect(() => {
+    refetch()
+  }, [data, refetch])
 
   if (loading) return <div>Loading...</div>
   if (error) return <div>error: {error.message}</div>
@@ -37,7 +41,7 @@ const IndexPage = () => {
           <ListHeader.Item width="15%">作成日</ListHeader.Item>
           <ListHeader.Item width="8%">更新日</ListHeader.Item>
           <ListHeader.Item width="7%">
-            <a href="./" className={styles.new_button}>New</a>
+            <Link to="create" className={styles.new_button}>New</Link>
           </ListHeader.Item>
         </ListHeader>
 
@@ -45,7 +49,11 @@ const IndexPage = () => {
           <Card
             key={post.node.id}
             id={post.node.id}
-            title={post.node.text.split("# ")[1].split(/\n/)[0]}
+            title={
+              post.node.text.match("# ") ?
+              post.node.text.split("# ")[1].split(/\n/)[0] :
+              "No Title"
+            }
             author={post.node.author.name}
             isPublish={post.node.isPublish}
             createdAt={post.node.createdAt}

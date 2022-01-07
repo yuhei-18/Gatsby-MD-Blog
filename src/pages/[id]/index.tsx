@@ -1,5 +1,6 @@
 import * as React from "react"
 import clsx from "clsx"
+import { Link } from "gatsby"
 import { decode } from "base-64"
 import { useQuery, useMutation } from "@apollo/client"
 import { POSTS } from "../../graphql/query"
@@ -28,11 +29,6 @@ const IndexPage: React.FC<PropsType> = (props) => {
     loading: updatePostLoading,
     error: updatePostError,
   }] = useMutation(UPDATE_POST)
-
-  // DBからの情報を取得したタイミングで再表示
-  // React.useEffect(() => {
-  //   setTextState(post.text)
-  // }, [post.text])
 
   if (loading || updatePostLoading) return <div>Loading...</div>
   if (error || updatePostError) return <div>error: {error.message}</div>
@@ -67,7 +63,7 @@ const IndexPage: React.FC<PropsType> = (props) => {
         <Header>
           <ul className={styles.header}>
             <li>
-              <a className={clsx(styles.button, styles.back_button)} href="../">BackHome</a>
+              <Link className={clsx(styles.button, styles.back_button)} to="../">BackHome</Link>
             </li>
             <li>
               <a
